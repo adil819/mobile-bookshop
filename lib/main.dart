@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'to_do_screen.dart';
+import 'package:flutter_day_one/to_do_screen.dart';
+import 'package:flutter_day_one/to_do_detail.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {

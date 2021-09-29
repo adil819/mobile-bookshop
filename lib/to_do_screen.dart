@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_day_one/to_do_detail.dart';
+import 'package:flutter_day_one/widget/text_field_widget.dart';
+import 'package:form_field_validator/form_field_validator.dart';
 
 class ToDo{
   int id;
@@ -71,9 +74,17 @@ class _ToDoScreenState extends State<ToDoScreen> {
                   key: _formKey,
                   child: Column(
                     children: [
-                      textFormField(toDoName, 'What do you want to do?', 'Let me know what you will do'),
-                      textFormField(toDoDesc, 'High/Low Impact? High/Low Effort?', 'Ex: Low Impact, Low Efforts'),
-                      textFormField(toDoTime, 'When will you do it?', 'Specify the time, yes?'),
+                      TextFieldWidget(
+                        con: toDoName,
+                        hint: 'What do you want to do?',
+                        validate: MultiValidator([
+                          RequiredValidator(errorText: 'Let me know what you will do'),
+                          MinLengthValidator(5, errorText: '5 min char')
+                        ]),
+                      ),
+                      // textFormField(toDoName, 'What do you want to do?', 'Let me know what you will do'),
+                      // textFormField(toDoDesc, 'High/Low Impact? High/Low Effort?', 'Ex: Low Impact, Low Efforts'),
+                      // textFormField(toDoTime, 'When will you do it?', 'Specify the time, yes?'),
                       Padding(
                         padding: const EdgeInsets.all(16.0),
                         child: ElevatedButton(onPressed: (){
@@ -158,7 +169,11 @@ class _ToDoScreenState extends State<ToDoScreen> {
                                               ),
                                             ),
                                           ]
-                                        )
+                                        ),
+                                        onTap: (){
+                                          // Navigator.pushNamed(context, '/detail');
+                                          Navigator.push(context, MaterialPageRoute(builder: (context) => ToDoDetail()));
+                                        },
                                       ),
                                     ),
                                   ],
