@@ -1,6 +1,18 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
+
+class ToDo{
+  int id;
+  String toDoName;
+  String toDoDesc;
+  String toDoTime;
+
+  ToDo(
+      this.id,
+      this.toDoName,
+      this.toDoDesc,
+      this.toDoTime
+      );
+}
 
 class ToDoScreen extends StatefulWidget {
   const ToDoScreen({Key? key}) : super(key: key);
@@ -9,16 +21,26 @@ class ToDoScreen extends StatefulWidget {
   _ToDoScreenState createState() => _ToDoScreenState();
 }
 
+
 class _ToDoScreenState extends State<ToDoScreen> {
-  List<String> todos = [];
+  List<ToDo> todos = <ToDo>[];
   TextEditingController toDoName = new TextEditingController();
+  TextEditingController toDoDesc = new TextEditingController();
+  TextEditingController toDoTime = new TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   addToDo(){
     setState(() {
-      todos.add(toDoName.text);
+      todos.add(new ToDo(todos.length + 1, toDoName.text, toDoDesc.text, toDoTime.text));
+      // todos.add(toDoName.text);
       // print('value of todos');
       // print(todos);
+    });
+  }
+
+  removeToDo(int index){
+    setState(() {
+      todos.removeAt(index);
     });
   }
 
@@ -36,15 +58,37 @@ class _ToDoScreenState extends State<ToDoScreen> {
                   child: Column(
                     children: [
                       TextFormField(
-                        controller: toDoName,
-                        decoration: InputDecoration(hintText: 'Enter Your To Do'),
-                        validator:(value) {
-                          if (value == null || value.isEmpty){
-                            return 'Please enter your to do!';
-                          } else {
-                            return null;
+                          controller: toDoName,
+                          decoration: InputDecoration(hintText: 'What do you want to do?'),
+                          validator:(value) {
+                            if (value == null || value.isEmpty){
+                              return 'Let me know what will you do :)';
+                            } else {
+                              return null;
+                            }
                           }
-                        }
+                      ),
+                      TextFormField(
+                          controller: toDoDesc,
+                          decoration: InputDecoration(hintText: 'High/Low Impact? High/Low Effort?'),
+                          validator:(value) {
+                            if (value == null || value.isEmpty){
+                              return 'Example: High Impact, Low Effort';
+                            } else {
+                              return null;
+                            }
+                          }
+                      ),
+                      TextFormField(
+                          controller: toDoTime,
+                          decoration: InputDecoration(hintText: 'When will you do it?'),
+                          validator:(value) {
+                            if (value == null || value.isEmpty){
+                              return 'You have to specify the time, yes?';
+                            } else {
+                              return null;
+                            }
+                          }
                       ),
                       Padding(
                         padding: const EdgeInsets.all(16.0),
@@ -113,8 +157,22 @@ class _ToDoScreenState extends State<ToDoScreen> {
                                     Expanded(
                                       child: ListTile(
                                         leading: Icon(Icons.access_alarm),
-                                        title: Text(todos[index],
-                                            style: TextStyle(fontWeight: FontWeight.bold)),
+                                        title: Row(
+                                          children: [
+                                            Expanded(
+                                              child: Text(todos[index].toDoName,style: TextStyle(fontWeight: FontWeight.bold)),
+                                            ),
+                                            Expanded(
+                                              child: TextButton(
+                                                child:
+                                                  Icon(Icons.auto_delete_outlined),
+                                                  onPressed: (){
+                                                    removeToDo(index);
+                                                  },
+                                              ),
+                                            ),
+                                          ]
+                                        )
                                       ),
                                     ),
                                   ],
