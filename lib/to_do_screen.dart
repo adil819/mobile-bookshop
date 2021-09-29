@@ -44,6 +44,20 @@ class _ToDoScreenState extends State<ToDoScreen> {
     });
   }
 
+  TextFormField textFormField(TextEditingController toDoName, String placeholder,  String emptyAlert){
+    return TextFormField(
+      controller: toDoName,
+      decoration: InputDecoration(hintText: placeholder),
+      validator:(value) {
+        if (value == null || value.isEmpty){
+          return emptyAlert;
+        } else {
+          return null;
+        }
+      }
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(child: Scaffold(
@@ -57,39 +71,9 @@ class _ToDoScreenState extends State<ToDoScreen> {
                   key: _formKey,
                   child: Column(
                     children: [
-                      TextFormField(
-                          controller: toDoName,
-                          decoration: InputDecoration(hintText: 'What do you want to do?'),
-                          validator:(value) {
-                            if (value == null || value.isEmpty){
-                              return 'Let me know what will you do :)';
-                            } else {
-                              return null;
-                            }
-                          }
-                      ),
-                      TextFormField(
-                          controller: toDoDesc,
-                          decoration: InputDecoration(hintText: 'High/Low Impact? High/Low Effort?'),
-                          validator:(value) {
-                            if (value == null || value.isEmpty){
-                              return 'Example: High Impact, Low Effort';
-                            } else {
-                              return null;
-                            }
-                          }
-                      ),
-                      TextFormField(
-                          controller: toDoTime,
-                          decoration: InputDecoration(hintText: 'When will you do it?'),
-                          validator:(value) {
-                            if (value == null || value.isEmpty){
-                              return 'You have to specify the time, yes?';
-                            } else {
-                              return null;
-                            }
-                          }
-                      ),
+                      textFormField(toDoName, 'What do you want to do?', 'Let me know what you will do'),
+                      textFormField(toDoDesc, 'High/Low Impact? High/Low Effort?', 'Ex: Low Impact, Low Efforts'),
+                      textFormField(toDoTime, 'When will you do it?', 'Specify the time, yes?'),
                       Padding(
                         padding: const EdgeInsets.all(16.0),
                         child: ElevatedButton(onPressed: (){
@@ -160,10 +144,12 @@ class _ToDoScreenState extends State<ToDoScreen> {
                                         title: Row(
                                           children: [
                                             Expanded(
+                                              flex: 5,
                                               child: Text(todos[index].toDoName,style: TextStyle(fontWeight: FontWeight.bold)),
                                             ),
                                             Expanded(
-                                              child: TextButton(
+                                              child: MaterialButton(
+                                                minWidth: 100.0,
                                                 child:
                                                   Icon(Icons.auto_delete_outlined),
                                                   onPressed: (){
