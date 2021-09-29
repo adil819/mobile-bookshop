@@ -151,7 +151,7 @@ class _ToDoScreenState extends State<ToDoScreen> {
                                               child: MaterialButton(
                                                 minWidth: 100.0,
                                                 child:
-                                                  Icon(Icons.auto_delete_outlined),
+                                                  Icon(Icons.auto_delete_outlined, color: Colors.red,),
                                                   onPressed: (){
                                                     removeToDo(index);
                                                   },

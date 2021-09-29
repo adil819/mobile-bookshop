@@ -15,7 +15,11 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.cyan,
       ),
-      home: ToDoScreen()
+      // home: ToDoScreen() => gadipake karena mau navigation pake routes
+      routes: {
+        '/' : (context) => ToDoScreen(),
+        '/detail' : (context) => ToDoDetail()
+      },
     ); // MaterialApp
   }
 }
