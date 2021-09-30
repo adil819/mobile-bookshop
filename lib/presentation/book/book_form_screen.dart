@@ -22,6 +22,20 @@ class _BookFormScreenState extends State<BookFormScreen> {
   TextEditingController stock = new TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+  TextFormField textFormField(TextEditingController field, String placeholder,  String emptyAlert){
+    return TextFormField(
+        controller: field,
+        decoration: InputDecoration(hintText: placeholder),
+        validator:(value) {
+          if (value == null || value.isEmpty){
+            return emptyAlert;
+          } else {
+            return null;
+          }
+        }
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,41 +45,39 @@ class _BookFormScreenState extends State<BookFormScreen> {
           key: _formKey,
           child: Column(
             children: [
-              TextFormField(
-                controller: title,
-                  decoration: InputDecoration(hintText: 'Enter Book title'),
-                  validator:(value) {
-                    if (value == null || value.isEmpty){
-                      return 'Please enter!';
-                    } else {
-                      return null;
-                    }
-                  }
-              ),
-              TextFormField(
-                // controller: description,
-                  decoration: InputDecoration(hintText: 'Enter The Description'),
-                  validator:(value) {
-                    if (value == null || value.isEmpty){
-                      return 'Please enter!';
-                    } else {
-                      return null;
-                    }
-                  }
-              ),
+              textFormField(title, 'Enter Book title', 'Please enter!'),
+              textFormField(description, 'Enter Book description', 'Please enter!'),
+              textFormField(publisher, 'Enter Book publisher', 'Please enter!'),
+              textFormField(pages, 'Enter Book pages', 'Please enter!'),
+              textFormField(year, 'Enter Book year', 'Please enter!'),
+              textFormField(language, 'Enter Book language', 'Please enter!'),
+              textFormField(price, 'Enter Book price', 'Please enter!'),
+              textFormField(stock, 'Enter Book stock', 'Please enter!'),
+              // TextFormField(
+              //   controller: title,
+              //     decoration: InputDecoration(hintText: 'Enter Book title'),
+              //     validator:(value) {
+              //       if (value == null || value.isEmpty){
+              //         return 'Please enter!';
+              //       } else {
+              //         return null;
+              //       }
+              //     }
+              // ),
+
               TextButton(
                   onPressed: (){
                     setState(() {
                       widget.bookViewModel.addBook(Book(
                           // title: 'Belaja Googld Cloud',
                           title: title.text,
-                          description: 'Description',
-                          year: 2021,
-                          pages: 50,
-                          language: 'Indonesia',
-                          publisher: 'Legionare',
-                          price: 300000,
-                          stock: 8
+                          description: description.text,
+                          year: year.text,
+                          pages: pages.text,
+                          language: language.text,
+                          publisher: publisher.text,
+                          price: price.text,
+                          stock: stock.value
                       ));
                     });
                   },
