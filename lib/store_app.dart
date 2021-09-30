@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_day_one/presentation/book/book_form_screen.dart';
 import 'package:flutter_day_one/presentation/book/book_list_screen.dart';
 import 'package:flutter_day_one/presentation/member/member_list_screen.dart';
 
@@ -22,19 +23,27 @@ class _StoreAppState extends State<StoreApp> {
         appBar: AppBar(title: Text('Book Store'),),
         body: _pages[_currentPage],
         bottomNavigationBar: BottomNavigationBar(
-          currentIndex: ,
+          currentIndex: _currentPage,
           items: [
             BottomNavigationBarItem(
                 label: 'Book',
                 icon: Icon(Icons.book)
             ),
             BottomNavigationBarItem(
-                label: 'Book',
-                icon: Icon(Icons.book)
-            ),
-          ]
+                label: 'Member',
+                icon: Icon(Icons.perm_identity)
+            )
+          ],
+          onTap: (int index){
+            setState(() {
+              _currentPage = index;
+            });
+          }
         )
-      ))
+      )),
+      routes: {
+        '/add-book' : (context) => BookFormScreen()
+      },
     );
   }
 }

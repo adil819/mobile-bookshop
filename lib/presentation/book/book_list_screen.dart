@@ -12,7 +12,17 @@ class _BookListScreenState extends State<BookListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        child: Text('Book List'),
+        child: Column(
+          children: [
+            Text('Book List'),
+            TextButton(
+              onPressed:(){
+                Navigator.pushNamed(context, '/add-book');
+              },
+              child: Text('Add Book'),
+            )
+          ]
+        )
       ),
     );
   }
