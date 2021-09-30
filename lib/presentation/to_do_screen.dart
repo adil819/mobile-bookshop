@@ -1,21 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_day_one/to_do_detail.dart';
+import 'package:flutter_day_one/model/to_do.dart';
+import 'package:flutter_day_one/presentation/to_do_detail.dart';
+import 'package:flutter_day_one/repository/to_do_repo.dart';
 import 'package:flutter_day_one/widget/text_field_widget.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 
-class ToDo{
-  int id;
-  String toDoName;
-  String toDoDesc;
-  String toDoTime;
-
-  ToDo(
-      this.id,
-      this.toDoName,
-      this.toDoDesc,
-      this.toDoTime
-      );
-}
 
 class ToDoScreen extends StatefulWidget {
   const ToDoScreen({Key? key}) : super(key: key);
@@ -26,40 +15,41 @@ class ToDoScreen extends StatefulWidget {
 
 
 class _ToDoScreenState extends State<ToDoScreen> {
-  List<ToDo> todos = <ToDo>[];
+  // List<ToDo> todos = <ToDo>[];
+  ToDoRepository _toDoRepository = ToDoRepository();
   TextEditingController toDoName = new TextEditingController();
   TextEditingController toDoDesc = new TextEditingController();
   TextEditingController toDoTime = new TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  addToDo(){
-    setState(() {
-      todos.add(new ToDo(todos.length + 1, toDoName.text, toDoDesc.text, toDoTime.text));
-      // todos.add(toDoName.text);
-      // print('value of todos');
-      // print(todos);
-    });
-  }
-
-  removeToDo(int index){
-    setState(() {
-      todos.removeAt(index);
-    });
-  }
-
-  TextFormField textFormField(TextEditingController toDoName, String placeholder,  String emptyAlert){
-    return TextFormField(
-      controller: toDoName,
-      decoration: InputDecoration(hintText: placeholder),
-      validator:(value) {
-        if (value == null || value.isEmpty){
-          return emptyAlert;
-        } else {
-          return null;
-        }
-      }
-    );
-  }
+  // addToDo(){
+  //   setState(() {
+  //     todos.add(new ToDo(todos.length + 1, toDoName.text, toDoDesc.text, toDoTime.text));
+  //     // todos.add(toDoName.text);
+  //     // print('value of todos');
+  //     // print(todos);
+  //   });
+  // }
+  //
+  // removeToDo(int index){
+  //   setState(() {
+  //     todos.removeAt(index);
+  //   });
+  // }
+  //
+  // TextFormField textFormField(TextEditingController toDoName, String placeholder,  String emptyAlert){
+  //   return TextFormField(
+  //     controller: toDoName,
+  //     decoration: InputDecoration(hintText: placeholder),
+  //     validator:(value) {
+  //       if (value == null || value.isEmpty){
+  //         return emptyAlert;
+  //       } else {
+  //         return null;
+  //       }
+  //     }
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -82,6 +72,22 @@ class _ToDoScreenState extends State<ToDoScreen> {
                           MinLengthValidator(5, errorText: '5 min char')
                         ]),
                       ),
+                      TextFieldWidget(
+                        con: toDoDesc,
+                        hint: 'High/Low Impact? High/Low Effort?',
+                        validate: MultiValidator([
+                          RequiredValidator(errorText: 'Ex: Low Impact, Low Efforts'),
+                          MinLengthValidator(15, errorText: '15 min char')
+                        ]),
+                      ),
+                      TextFieldWidget(
+                        con: toDoTime,
+                        hint: 'When will you do it?',
+                        validate: MultiValidator([
+                          RequiredValidator(errorText: 'Specify the time, yes?'),
+                          MinLengthValidator(4, errorText: 'Ex: 08.00')
+                        ]),
+                      ),
                       // textFormField(toDoName, 'What do you want to do?', 'Let me know what you will do'),
                       // textFormField(toDoDesc, 'High/Low Impact? High/Low Effort?', 'Ex: Low Impact, Low Efforts'),
                       // textFormField(toDoTime, 'When will you do it?', 'Specify the time, yes?'),
@@ -89,7 +95,11 @@ class _ToDoScreenState extends State<ToDoScreen> {
                         padding: const EdgeInsets.all(16.0),
                         child: ElevatedButton(onPressed: (){
                           if(_formKey.currentState!.validate()) {
-                            addToDo();
+                            setState(() {
+                              _toDoRepository.addToDo(new ToDo(_toDoRepository.getListToDo().length+1
+                                , toDoName.text, toDoDesc.text, toDoTime.text));
+                            });
+                            // addToDo();
                           }
                         },
                           child: const Text('Submit')),
@@ -156,7 +166,7 @@ class _ToDoScreenState extends State<ToDoScreen> {
                                           children: [
                                             Expanded(
                                               flex: 5,
-                                              child: Text(todos[index].toDoName,style: TextStyle(fontWeight: FontWeight.bold)),
+                                              child: Text(_toDoRepository.getListToDo()[index].toDoName,style: TextStyle(fontWeight: FontWeight.bold)),
                                             ),
                                             Expanded(
                                               child: MaterialButton(
@@ -164,7 +174,7 @@ class _ToDoScreenState extends State<ToDoScreen> {
                                                 child:
                                                   Icon(Icons.auto_delete_outlined, color: Colors.red,),
                                                   onPressed: (){
-                                                    removeToDo(index);
+                                                    _toDoRepository.removeToDo(index);
                                                   },
                                               ),
                                             ),
@@ -172,7 +182,9 @@ class _ToDoScreenState extends State<ToDoScreen> {
                                         ),
                                         onTap: (){
                                           // Navigator.pushNamed(context, '/detail');
-                                          Navigator.push(context, MaterialPageRoute(builder: (context) => ToDoDetail()));
+                                          Navigator.push(context, MaterialPageRoute(builder: (context) => ToDoDetail(
+                                            toDo: _toDoRepository.getListToDo()[index],
+                                          )));
                                         },
                                       ),
                                     ),
@@ -182,7 +194,8 @@ class _ToDoScreenState extends State<ToDoScreen> {
                             ],
                           );
                         },
-                        itemCount: todos.length,
+                        // itemCount: todos.length,
+                        itemCount: _toDoRepository.getListToDo().length,
                       )
                       )
                   )
