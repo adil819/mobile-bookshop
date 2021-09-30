@@ -79,7 +79,9 @@ class _BookFormScreenState extends State<BookFormScreen> {
                           price: 202020, //price.text,
                           stock: 202, //stock.value
                       ));
-                    });
+                    },
+                    );
+                    Navigator.pop(context, 'done');
                   },
                   child: Text('Submit code')
               ),

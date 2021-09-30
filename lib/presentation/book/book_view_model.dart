@@ -6,6 +6,11 @@ class BookViewModel {
 
   addBook(Book newBook)async{
     final newBookRegistered = await _bookRepository.addProduct(newBook);
+    print(newBookRegistered);
+  }
 
+  Future<List<dynamic>> getBook()async{
+    final getListBook = await _bookRepository.getProduct();
+    return getListBook;
   }
 }
