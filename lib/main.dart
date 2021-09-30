@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_day_one/presentation/to_do_screen.dart';
-import 'package:flutter_day_one/presentation/to_do_detail.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,7 +17,6 @@ class MyApp extends StatelessWidget {
       // home: ToDoScreen() => gadipake karena mau navigation pake routes
       routes: {
         '/' : (context) => ToDoScreen()
-        // '/detail' : (context) => ToDoDetail()
       },
     ); // MaterialApp
   }
