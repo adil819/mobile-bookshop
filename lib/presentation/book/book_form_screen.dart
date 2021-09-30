@@ -72,17 +72,21 @@ class _BookFormScreenState extends State<BookFormScreen> {
                           // title: 'Belaja Googld Cloud',
                           title: title.text,
                           description: description.text,
-                          year: year.text,
-                          pages: pages.text,
+                          year: 2020, //year.text,
+                          pages: 20, //pages.text,
                           language: language.text,
                           publisher: publisher.text,
-                          price: price.text,
-                          stock: stock.value
+                          price: 202020, //price.text,
+                          stock: 202, //stock.value
                       ));
                     });
                   },
                   child: Text('Submit code')
               ),
+
+
+
+
             ]
           )
         )
