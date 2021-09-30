@@ -13,6 +13,13 @@ class BookFormScreen extends StatefulWidget {
 
 class _BookFormScreenState extends State<BookFormScreen> {
   TextEditingController title = new TextEditingController();
+  TextEditingController description = new TextEditingController();
+  TextEditingController year = new TextEditingController();
+  TextEditingController pages = new TextEditingController();
+  TextEditingController language = new TextEditingController();
+  TextEditingController publisher = new TextEditingController();
+  TextEditingController price = new TextEditingController();
+  TextEditingController stock = new TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
