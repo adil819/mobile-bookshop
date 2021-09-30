@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       ),
       // home: ToDoScreen() => gadipake karena mau navigation pake routes
       routes: {
-        '/' : (context) => ToDoScreen()
+        '/' : (context) => StoreApp()
       },
     ); // MaterialApp
   }
