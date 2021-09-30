@@ -83,7 +83,7 @@ class _BookFormScreenState extends State<BookFormScreen> {
                     );
                     Navigator.pop(context, 'done');
                   },
-                  child: Text('Submit code')
+                  child: Text('Submit')
               ),
 
 

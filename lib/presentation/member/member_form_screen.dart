@@ -16,7 +16,6 @@ class _MemberFormScreenState extends State<MemberFormScreen> {
   TextEditingController lastName = new TextEditingController();
   TextEditingController email = new TextEditingController();
   TextEditingController password = new TextEditingController();
-  TextEditingController status = new TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   TextFormField textFormField(TextEditingController field, String placeholder,  String emptyAlert){
@@ -42,6 +41,10 @@ class _MemberFormScreenState extends State<MemberFormScreen> {
               key: _formKey,
               child: Column(
                   children: [
+                    textFormField(firstName, 'Enter your first name', 'Please enter!'),
+                    textFormField(lastName, 'Enter your last name', 'Please enter!'),
+                    textFormField(email, 'Enter your email', 'Please enter!'),
+                    textFormField(password, 'Enter your password', 'Please enter!'),
                     // textFormField(title, 'Enter Book title', 'Please enter!'),
                     // textFormField(description, 'Enter Book description', 'Please enter!'),
                     // textFormField(publisher, 'Enter Book publisher', 'Please enter!'),
@@ -55,17 +58,17 @@ class _MemberFormScreenState extends State<MemberFormScreen> {
                         onPressed: (){
                           setState(() {
                             widget.memberViewModel.addMember(Member(
-                              firstName: 'tes', // firstName.text,
-                              lastName: 'tis', // lastName.text,
-                              email: 'tes@gmail.com', //year.text,
-                              password: 'testes', //pages.text,
-                              status: 0, //stock.value
+                              firstName: firstName.text,
+                              lastName: lastName.text,
+                              email: email.text,
+                              password: password.text,
+                              status: 1, //stock.value
                             ));
                           },
                           );
                           Navigator.pop(context, 'done');
                         },
-                        child: Text('Submit code')
+                        child: Text('Submitcode')
                     ),
 
 
